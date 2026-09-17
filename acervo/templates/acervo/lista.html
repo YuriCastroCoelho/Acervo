@@ -1,16 +1,47 @@
-{% load static %}
+{% extends 'acervo/base.html' %}
 
-<html>
-<head>
-    <link rel="stylesheet" href="{% static 'acervo/estilo.css' %}">
-</head>
+{% block conteudo %}
+<h2>Acervo</h2>
 
-<body>
-    <header>Biblioteca</header>
+<form method="get">
+    <input type="text" name="nome" placeholder="Buscar por nome" value="{{ nome_busca }}">
 
-    {% block conteudo %}
-    {% endblock %}
+    <select name="tipo">
+        <option value="">Todos os tipos</option>
+        {% for valor, label in tipos %}
+            <option value="{{ valor }}" {% if valor == tipo_busca %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
 
-    <footer>© 2026</footer>
-</body>
-</html>
+    <select name="categoria">
+        <option value="">Todas as categorias</option>
+        {% for valor, label in categorias %}
+            <option value="{{ valor }}" {% if valor == categoria_busca %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Título</th><th>Autor</th><th>Ano</th><th>Tipo</th><th>Categoria</th><th>Disponível</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.ano }}</td>
+            <td>{{ livro.get_tipo_display }}</td>
+            <td>{{ livro.get_categoria_display }}</td>
+            <td>{{ livro.disponivel|yesno:"Sim,Não" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Nenhum livro encontrado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'acervo/estilo.css' %}">
+</head>
+
+<body>
+
+    <header>Biblioteca</header>
+
+    <main>
+        {% block conteudo %}
+        {% endblock %}
+    </main>
+
+    <footer>© 2026</footer>
+
+</body>
+</html>

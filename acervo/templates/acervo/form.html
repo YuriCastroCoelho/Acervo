@@ -1,7 +1,9 @@
+{% extends 'acervo/base.html' %}
+
+{% block conteudo %}
 <form method="post">
     {% csrf_token %}
-
     {{ form.as_p }}
-
-    <button>Salvar</button>
+    <button type="submit">Salvar</button>
 </form>
+{% endblock %}
